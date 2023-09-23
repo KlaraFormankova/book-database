@@ -6,14 +6,10 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-type Book = {
-    id: number;
-    title: string;
-    author: string;
-  };
+import { IBook } from "../../types/global";
 
 export default function Page() {
-    const books: Book[] = [
+    const books: IBook[] = [
         { id: 1, title: "Book 1", author: "Author 1" },
         { id: 2, title: "Book 2", author: "Author 2" },
         { id: 3, title: "Book 3", author: "Author 3" },
@@ -39,7 +35,7 @@ export default function Page() {
 }
 
 
-function BookPaper(props: { book: Book }) {
+function BookPaper(props: { book: IBook }) {
     return (
         <Link href={`/admin/books/${props.book.id}`}>
             <Paper elevation={3}>
