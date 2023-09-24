@@ -20,7 +20,12 @@ export default function Page() {
 	}
 
     return (
-		<BookForm onSubmit={handleCreateBook} />
+		<div>
+			<Typography variant="h2" gutterBottom>
+				Create a New Book
+			</Typography>
+			<BookForm onSubmit={handleCreateBook} />
+		</div>
     );
 }
 
@@ -41,9 +46,6 @@ function BookForm({ onSubmit }: BookFormProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-		<Typography variant="h2" gutterBottom>
-			Create a New Book
-		</Typography>
 		<Stack spacing={2} direction="column">
 			<TextField 
 				label="Title"
