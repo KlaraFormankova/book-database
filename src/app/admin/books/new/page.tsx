@@ -1,77 +1,35 @@
-'use client';
+"use client";
 
-import { IBook, INewBook } from '@/app/types/global';
-import { Button, Stack, TextField, Typography } from '@mui/material';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import React, { useState } from 'react';
+import { IBook } from "@/app/types/global";
+import { Typography } from "@mui/material";
+import React, { useState } from "react";
+import BookForm from "@/app/components/book-form";
 
 export default function Page() {
-	const [books, setBooks] = useState<IBook[]>([]);
-	const [nextId, setNextId] = useState<number>(1);
+  const [books, setBooks] = useState<IBook[]>([]);
 
-	const handleCreateBook = (newBook: INewBook) => {
-		const book: IBook = {
-			id: nextId,
-			title: newBook.title,
-			author: newBook.author
-		};
-		setNextId((nextId) => nextId + 1);
-		setBooks((books) => [...books, book]);
-	}
-
-    return (
-		<div>
-			<Typography variant="h2" gutterBottom>
-				Create a New Book
-			</Typography>
-			<BookForm onSubmit={handleCreateBook} />
-		</div>
-    );
-}
-
-type BookFormProps = {
-  onSubmit: (newBook: INewBook) => void;
-};
-
-function BookForm({ onSubmit }: BookFormProps) {
-  const [title, setTitle] = useState<string>('');
-  const [author, setAuthor] = useState<string>('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit({ title, author });
-    setTitle('');
-    setAuthor('');
+  const handleAddBook = (newBook: IBook) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newBook),
+    };
+    fetch(
+      "https://crudcrud.com/api/d0565cee39e94d10a4eee4dd3153b12b/books",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setBooks([...books, data]);
+      });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-		<Stack spacing={2} direction="column">
-			<TextField 
-				label="Title"
-				onChange={(e) => setTitle(e.target.value)}
-				required
-				variant='outlined'
-				type='text'
-				sx={{mb: 3}}
-				value={title}
-			/>
-			<TextField
-				label="Author"
-				onChange={(e) => setAuthor(e.target.value)}
-				required
-				variant='outlined'
-				type='text'
-				sx={{mb: 3}}
-				value={author}
-			/>
-			<Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-				Upload cover image
-				<input type="file" hidden />
-			</Button>
-			<Button variant="outlined" type='submit'>Submit</Button>
-		</Stack>
-    </form>
+    <div>
+      <Typography variant="h4" gutterBottom>
+        Create a New Book
+      </Typography>
+      <BookForm onUpdateBook={handleAddBook} />
+    </div>
   );
 }
-

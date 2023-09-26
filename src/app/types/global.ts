@@ -1,10 +1,6 @@
 export interface IBook {
-    id: number;
+    _id?: string;
     title: string;
     author: string;
-};
-
-export interface INewBook {
-    title: string;
-    author: string;
+    image?: string;
 };
