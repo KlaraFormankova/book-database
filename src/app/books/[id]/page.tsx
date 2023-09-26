@@ -1,46 +1,58 @@
+"use client";
+
 import { IBook } from "@/app/types/global";
 import { Box, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Page({ params }: { params: { id: string } }) {
-	const book: IBook = {
-		id: 1,
-		title: "Book 1",
-		author: "Author 1"
-	}
+  const [book, setBook] = useState<IBook | null>(null);
 
+  useEffect(() => {
+    if (params.id) {
+      fetch(
+        `https://crudcrud.com/api/d0565cee39e94d10a4eee4dd3153b12b/books/${params.id}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setBook(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+  }, [params.id]);
 
-    return (
-		<div>
-			<Typography variant="h2" gutterBottom>
-                Book detail
-            </Typography>
-			<br />
-			<Stack spacing={2} direction="row">
-				<Box
-					component="img"
-					sx={{
-						height: 233,
-						width: 350,
-						maxHeight: { xs: 233, md: 167 },
-						maxWidth: { xs: 350, md: 250 },
-					}}
-					alt="Book cover photo"
-					src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
-				/>
-
-				<Stack spacing={2} direction="column">
-					<Stack spacing={2} direction="row">
-						<Typography variant="h5" gutterBottom>
-							{book.title}
-						</Typography>
-					</Stack>
-					<Stack spacing={2} direction="row">
-						<Typography variant="h6" gutterBottom>
-							{book.author}
-						</Typography>
-					</Stack>
-				</Stack>
-			</Stack>
-		</div>
-	)
+  return (
+    book && (
+      <div>
+        <Typography variant="h4" gutterBottom>
+          Book Details
+        </Typography>
+        <br />
+        <Stack spacing={2} direction={{ xs: "column", sm: "row" }}>
+          {book?.image && (
+            <Image
+              src={book.image}
+              alt="Book cover photo"
+              height={233}
+              width={350}
+            />
+          )}
+          <Stack spacing={2} direction="column">
+            <Stack spacing={2} direction="row">
+              <Typography variant="h5" gutterBottom>
+                {book.title}
+              </Typography>
+            </Stack>
+            <Stack spacing={2} direction="row">
+              <Typography variant="h6" gutterBottom>
+                {book.author}
+              </Typography>
+            </Stack>
+          </Stack>
+        </Stack>
+      </div>
+    )
+  );
 }
