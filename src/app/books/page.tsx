@@ -1,19 +1,23 @@
-import Link from "next/link";
+"use client";
 
-import React from 'react';
-import Typography from '@mui/material/Typography';
+import React, { useEffect } from "react";
 
 import { IBook } from "../types/global";
 import BookPapersGrid from "../components/book-papers-grid";
 
 export default function Page() {
-    const books: IBook[] = [
-        { id: 1, title: "Book 1", author: "Author 1" },
-        { id: 2, title: "Book 2", author: "Author 2" },
-        { id: 3, title: "Book 3", author: "Author 3" },
-    ];
+  const [books, setBooks] = React.useState<IBook[]>([]);
 
-    return (
-        <BookPapersGrid books={books} />
-    )
+  useEffect(() => {
+    fetch("https://crudcrud.com/api/d0565cee39e94d10a4eee4dd3153b12b/books")
+      .then((response) => response.json())
+      .then((data) => {
+        setBooks(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  return <BookPapersGrid books={books} />;
 }
