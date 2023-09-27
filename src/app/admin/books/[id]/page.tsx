@@ -1,8 +1,8 @@
 "use client";
 
+import BackToBooksBtn from "@/app/components/back-to-books-btn";
 import BookForm from "@/app/components/book-form";
 import { IBook } from "@/app/types/global";
-import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function Page({ params }: { params: { id: string } }) {
@@ -10,7 +10,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     fetch(
-      `https://crudcrud.com/api/d0565cee39e94d10a4eee4dd3153b12b/books/${params.id}`
+      `https://crudcrud.com/api/db50dacdac654274a04030dec14ad453/books/${params.id}`
     )
       .then((res) => res.json())
       .then((book) => {
@@ -20,7 +20,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const handleUpdateBook = (updatedBook: IBook) => {
     fetch(
-      `https://crudcrud.com/api/d0565cee39e94d10a4eee4dd3153b12b/books/${params.id}`,
+      `https://crudcrud.com/api/db50dacdac654274a04030dec14ad453/books/${params.id}`,
       {
         method: "PUT",
         headers: {
@@ -34,10 +34,9 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
-        Book Details
-      </Typography>
-      <br />
+      <div className="flex justify-end mb-3">
+        <BackToBooksBtn isAdmin={true} />
+      </div>
       {book && <BookForm originalBook={book} onUpdateBook={handleUpdateBook} />}
     </div>
   );

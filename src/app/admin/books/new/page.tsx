@@ -1,9 +1,10 @@
 "use client";
 
 import { IBook } from "@/app/types/global";
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
 import BookForm from "@/app/components/book-form";
+import BackToBooksBtn from "@/app/components/back-to-books-btn";
 
 export default function Page() {
   const [books, setBooks] = useState<IBook[]>([]);
@@ -15,7 +16,7 @@ export default function Page() {
       body: JSON.stringify(newBook),
     };
     fetch(
-      "https://crudcrud.com/api/d0565cee39e94d10a4eee4dd3153b12b/books",
+      "https://crudcrud.com/api/db50dacdac654274a04030dec14ad453/books",
       requestOptions
     )
       .then((response) => response.json())
@@ -26,9 +27,13 @@ export default function Page() {
 
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
-        Create a New Book
-      </Typography>
+      <Stack direction="row" className="justify-between">
+        <Typography variant="h4" gutterBottom>
+          Create a New Book
+        </Typography>
+        <BackToBooksBtn isAdmin={true} />
+      </Stack>
+      <br />
       <BookForm onUpdateBook={handleAddBook} />
     </div>
   );
