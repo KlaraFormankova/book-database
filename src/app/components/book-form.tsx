@@ -166,7 +166,6 @@ export default function BookForm(props: {
             <TextField
               label="Description"
               className="w-full"
-              required
               multiline
               maxRows={5}
               variant="outlined"
