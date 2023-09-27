@@ -1,25 +1,21 @@
 "use client";
 
-import React, { useEffect } from "react";
-
-import { IBook } from "../../types/global";
+import React from "react";
 import BookPapersGrid from "../../components/book-papers-grid";
+import useBooks from "@/app/hooks/use-books";
+import { Button } from "@mui/material";
 
 export default function Page() {
-  const [books, setBooks] = React.useState<IBook[]>([]);
+  const { books, setBooks } = useBooks();
 
-  useEffect(() => {
-    fetch("https://crudcrud.com/api/d0565cee39e94d10a4eee4dd3153b12b/books")
-      .then((response) => response.json())
-      .then((data) => {
-        setBooks(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
-
-  //
-
-  return <BookPapersGrid books={books} isAdmin={true} />;
+  return (
+    <div>
+      <div className="flex justify-end pb-3">
+        <Button variant="outlined" color="primary" href="/admin/books/new">
+          Add a new book
+        </Button>
+      </div>
+      <BookPapersGrid books={books} isAdmin={true} />
+    </div>
+  );
 }

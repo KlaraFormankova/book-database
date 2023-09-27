@@ -1,23 +1,16 @@
 "use client";
 
-import React, { useEffect } from "react";
-
-import { IBook } from "../types/global";
+import React from "react";
 import BookPapersGrid from "../components/book-papers-grid";
+import useBooks from "../hooks/use-books";
 
 export default function Page() {
-  const [books, setBooks] = React.useState<IBook[]>([]);
+  const { books, setBooks } = useBooks();
 
-  useEffect(() => {
-    fetch("https://crudcrud.com/api/d0565cee39e94d10a4eee4dd3153b12b/books")
-      .then((response) => response.json())
-      .then((data) => {
-        setBooks(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
-
-  return <BookPapersGrid books={books} />;
+  return (
+    <div>
+      <br />
+      <BookPapersGrid books={books} />
+    </div>
+  );
 }
