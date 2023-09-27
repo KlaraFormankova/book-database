@@ -5,7 +5,7 @@ export default function UploadImgBox(props: { imageUpload: (e: any) => void }) {
   return (
     <Box
       component="span"
-      minWidth={200}
+      minWidth={250}
       className="p-0"
       sx={{ p: 2, border: "1px dashed grey" }}
     >
