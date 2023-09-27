@@ -18,14 +18,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static" className="p-2">
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Book database
-            </Typography>
-          </AppBar>
+        <Box sx={{ flexGrow: 1 }} className="app-bar">
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+            className="text-center p-2 font-mono"
+          >
+            Book database
+          </Typography>
         </Box>
-        <div className="m-2">{children}</div>
+        <div className="p-3">{children}</div>
       </body>
     </html>
   );
