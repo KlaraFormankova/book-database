@@ -2,21 +2,11 @@
 
 import BackToBooksBtn from "@/app/components/back-to-books-btn";
 import BookForm from "@/app/components/book-form";
+import useBook from "@/app/hooks/use-book";
 import { IBook } from "@/app/types/global";
-import { useEffect, useState } from "react";
 
 export default function Page({ params }: { params: { id: string } }) {
-  const [book, setBook] = useState<IBook | null>(null);
-
-  useEffect(() => {
-    fetch(
-      `https://crudcrud.com/api/db50dacdac654274a04030dec14ad453/books/${params.id}`
-    )
-      .then((res) => res.json())
-      .then((book) => {
-        setBook(book);
-      });
-  }, [params.id]);
+  const { book, setBook } = useBook(params.id);
 
   const handleUpdateBook = (updatedBook: IBook) => {
     fetch(

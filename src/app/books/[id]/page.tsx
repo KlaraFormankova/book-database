@@ -1,28 +1,12 @@
 "use client";
 
-import { IBook } from "@/app/types/global";
 import { Stack, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import BackToBooksBtn from "@/app/components/back-to-books-btn";
+import useBook from "@/app/hooks/use-book";
 
 export default function Page({ params }: { params: { id: string } }) {
-  const [book, setBook] = useState<IBook | null>(null);
-
-  useEffect(() => {
-    if (params.id) {
-      fetch(
-        `https://crudcrud.com/api/db50dacdac654274a04030dec14ad453/books/${params.id}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setBook(data);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
-    }
-  }, [params.id]);
+  const { book, setBook } = useBook(params.id);
 
   return (
     book && (
