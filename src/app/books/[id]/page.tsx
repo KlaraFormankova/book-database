@@ -20,7 +20,7 @@ export default function Page({ params }: { params: { id: string } }) {
               src={book.image}
               alt="Book cover photo"
               height={240}
-              width={350}
+              width={300}
               className="max-h-96"
             />
           )}
